@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	ant "ants/ant"
+	"ants/ant"
 	"ants/world"
 )
 
