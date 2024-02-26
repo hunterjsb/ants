@@ -1,0 +1,50 @@
+{
+    "terrainTypes": [
+        {
+            "maxAltitude": 200,
+            "tile": "≈",
+            "description": "Deep Water"
+        },
+        {
+            "maxAltitude": 320,
+            "tile": ",",
+            "description": "Shallow Water"
+        },
+        {
+            "maxAltitude": 350,
+            "tile": ".",
+            "description": "Beach"
+        },
+        {
+            "maxAltitude": 500,
+            "moistureThreshold": 0.3,
+            "tileDry": "-",
+            "tileWet": "\"",
+            "descriptionDry": "Dry Plains",
+            "descriptionWet": "Grassland"
+        },
+        {
+            "maxAltitude": 600,
+            "moistureThreshold": 0.4,
+            "tileDry": "^",
+            "tileWet": "~",
+            "descriptionDry": "Bare Hills",
+            "descriptionWet": "Forested Hills"
+        },
+        {
+            "maxAltitude": 700,
+            "tile": "n",
+            "description": "Low Mountains"
+        },
+        {
+            "maxAltitude": 800,
+            "tile": "N",
+            "description": "High Mountains"
+        },
+        {
+            "maxAltitude": 1000,
+            "tile": "*",
+            "description": "Snow-Capped Peaks"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "Worker": {
+        "MoveSpeed": 1,
+        "Attack": 2,
+        "Defense": 3,
+        "HP": 50
+    },
+    "Soldier": {
+        "MoveSpeed": 1,
+        "Attack": 5,
+        "Defense": 5,
+        "HP": 100
+    },
+    "Scout": {
+        "MoveSpeed": 3,
+        "Attack": 3,
+        "Defense": 2,
+        "HP": 40
+    },
+    "Queen": {
+        "MoveSpeed": 0,
+        "Attack": 0,
+        "Defense": 5,
+        "HP": 200
+    }
+}
