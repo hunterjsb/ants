@@ -16,8 +16,7 @@ func RegisterRoutes() *mux.Router {
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/", YourHandler).Methods("GET")
 
-	amw := authenticationMiddleware{tokenUsers: make(map[string]string)}
-	amw.Populate()
+	amw := authenticationMiddleware{}
 	r.Use(amw.Middleware)
 
 	return r
