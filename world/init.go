@@ -10,10 +10,12 @@ const (
 )
 
 var OverWorld *World
+var OWInitialized bool = false
 
 func Init() {
 	OverWorld = New(width, height)
 	OverWorld.Generate()
+	OWInitialized = true
 
 	tileSet := LoadTileSet(tileMapFp)
 
