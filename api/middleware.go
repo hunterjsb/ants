@@ -9,7 +9,6 @@ import (
 	"ants/db"
 )
 
-// Define our struct
 type authenticationMiddleware struct {
 }
 
