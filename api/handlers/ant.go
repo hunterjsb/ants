@@ -15,10 +15,10 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	user, _ := r.Context().Value("user").(ant.User)
 
 	colony := ant.NewColony(&user, world.OverWorld.Tiles[randomY][randomX])
-	fmt.Println("COL!!!!", colony)
+	fmt.Println("New Colony created for", colony.Owner.Name)
 
 	// Marshal the newQueen to JSON
-	jsonResp, err := json.Marshal(colony)
+	jsonResp, err := json.Marshal(*(colony.Queen))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -27,7 +27,7 @@ type Ant struct {
 	Attack    int         `json:"attack"`
 	Defense   int         `json:"defense"`
 	HP        int         `json:"hp"`
-	Colony    *Colony     `json:"colony"`
+	Colony    *Colony     `json:"-"`
 }
 
 var antTypeConfig AntTypeConfig = loadAntTypeConfig(antTypesFp)

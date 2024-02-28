@@ -7,9 +7,9 @@ import (
 )
 
 type Tile struct {
-	World    *World
-	X        int
-	Y        int
+	World    *World `json:"-"`
+	X        int    `json:"x"`
+	Y        int    `json:"y"`
 	Altitude float64
 	Moisture float64
 }
