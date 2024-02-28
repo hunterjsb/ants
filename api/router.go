@@ -1,22 +1,18 @@
 package api
 
 import (
-	"net/http"
+	"ants/api/handlers"
 
 	"github.com/gorilla/mux"
 )
-
-func YourHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Ants!\n"))
-}
 
 func RegisterRoutes() *mux.Router {
 	r := mux.NewRouter()
 
 	// Routes consist of a path and a handler function.
-	r.HandleFunc("/", YourHandler).Methods("GET")
+	r.HandleFunc("/", handlers.AntHandler).Methods("GET")
 
-	amw := authenticationMiddleware{}
+	amw := AuthenticationMiddleware{}
 	r.Use(amw.Middleware)
 
 	return r
