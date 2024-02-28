@@ -21,15 +21,32 @@ const (
 )
 
 type Ant struct {
-	Tile      *world.Tile
-	Type      AntType
-	MoveSpeed int
-	Attack    int
-	Defense   int
-	HP        int
+	Tile      *world.Tile `json:"tile"`
+	Type      AntType     `json:"type"`
+	MoveSpeed int         `json:"moveSpeed"`
+	Attack    int         `json:"attack"`
+	Defense   int         `json:"defense"`
+	HP        int         `json:"hp"`
+	Colony    *Colony     `json:"colony"`
 }
 
 var antTypeConfig AntTypeConfig = loadAntTypeConfig(antTypesFp)
+
+func NewQueen(c *Colony, tile *world.Tile) *Ant {
+	props, exists := antTypeConfig[string(Queen)]
+	if !exists {
+		log.Fatal("Queen not defined in config")
+	}
+	return &Ant{
+		Colony:    c,
+		Tile:      tile,
+		Type:      Queen,
+		MoveSpeed: props.MoveSpeed,
+		Attack:    props.Attack,
+		Defense:   props.Defense,
+		HP:        props.HP,
+	}
+}
 
 func (a *Ant) Spawn(t AntType) *Ant {
 	if a.Type == Queen && t != Queen {
@@ -38,6 +55,7 @@ func (a *Ant) Spawn(t AntType) *Ant {
 			log.Fatalf("Ant type '%s' not found in configuration", t)
 		}
 		return &Ant{
+			Colony:    a.Colony,
 			Tile:      a.Tile,
 			Type:      t,
 			MoveSpeed: props.MoveSpeed,

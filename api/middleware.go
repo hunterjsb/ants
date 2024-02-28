@@ -3,10 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
+	"ants/ant"
 	"ants/db"
 )
 
@@ -26,16 +26,25 @@ func (amw *AuthenticationMiddleware) Middleware(next http.Handler) http.Handler 
 		}
 
 		// Verify the token.
-		user, err := verifyToken(r.Context(), token)
+		ctx := r.Context()
+		// Assuming verifyToken returns the username of the authenticated user:
+		userName, err := verifyToken(ctx, token)
 		if err != nil {
 			http.Error(w, "Forbidden: invalid token", http.StatusForbidden)
 			return
 		}
 
-		log.Printf("Authenticated user: %s\n", user)
+		// Create a User object (assuming you have a struct like this)
+		user := ant.User{Name: userName}
 
-		// Continue to the next handler.
-		next.ServeHTTP(w, r)
+		// Attach the User to the context
+		ctxWithUser := context.WithValue(ctx, "user", user)
+
+		// Create a new request with the updated context
+		rWithUser := r.WithContext(ctxWithUser)
+
+		// Continue to the next handler, using the new request
+		next.ServeHTTP(w, rWithUser)
 	})
 }
 

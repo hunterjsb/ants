@@ -1,8 +1,31 @@
 package handlers
 
-import "net/http"
+import (
+	"ants/ant"
+	"ants/world"
+	"encoding/json"
+	"fmt"
+	"math/rand"
+	"net/http"
+)
 
-// AntHandler handles requests for the "/ants" route
-func AntHandler(w http.ResponseWriter, r *http.Request) {
-	// Your handler logic here
+func Start(w http.ResponseWriter, r *http.Request) {
+	randomX := rand.Intn(world.Width)
+	randomY := rand.Intn(world.Height)
+	user, _ := r.Context().Value("user").(ant.User)
+
+	colony := ant.NewColony(&user, world.OverWorld.Tiles[randomY][randomX])
+	fmt.Println("COL!!!!", colony)
+
+	// Marshal the newQueen to JSON
+	jsonResp, err := json.Marshal(colony)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Set the Content-Type and write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResp)
 }

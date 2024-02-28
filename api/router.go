@@ -10,7 +10,7 @@ func RegisterRoutes() *mux.Router {
 	r := mux.NewRouter()
 
 	// Routes consist of a path and a handler function.
-	r.HandleFunc("/", handlers.AntHandler).Methods("GET")
+	r.HandleFunc("/start", handlers.Start).Methods("GET")
 
 	amw := AuthenticationMiddleware{}
 	r.Use(amw.Middleware)

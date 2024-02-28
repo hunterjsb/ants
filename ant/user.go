@@ -1,6 +1,6 @@
 package ant
 
 type User struct {
-	Name   string
-	Colony Colony
+	Name     string    `json:"name"`
+	Colonies []*Colony `json:"colonies"`
 }

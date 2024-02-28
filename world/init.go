@@ -5,15 +5,15 @@ import "fmt"
 const (
 	tileMapFp = "world/tilemap.json"
 	antTypeFp = "ant/anttypes.json"
-	width     = 100
-	height    = 40
+	Width     = 100
+	Height    = 40
 )
 
 var OverWorld *World
 var OWInitialized bool = false
 
 func Init() {
-	OverWorld = New(width, height)
+	OverWorld = New(Width, Height)
 	OverWorld.Generate()
 	OWInitialized = true
 
