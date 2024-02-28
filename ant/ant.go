@@ -20,15 +20,6 @@ const (
 	Queen   AntType = "Queen"
 )
 
-type AntTypeProperties struct {
-	MoveSpeed int `json:"MoveSpeed"`
-	Attack    int `json:"Attack"`
-	Defense   int `json:"Defense"`
-	HP        int `json:"HP"`
-}
-
-type AntTypeConfig map[string]AntTypeProperties
-
 type Ant struct {
 	Tile      *world.Tile
 	Type      AntType
@@ -36,21 +27,6 @@ type Ant struct {
 	Attack    int
 	Defense   int
 	HP        int
-}
-
-func loadAntTypeConfig(filename string) AntTypeConfig {
-	data, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatalf("Error reading file: %s", err)
-	}
-
-	var config AntTypeConfig
-	err = json.Unmarshal(data, &config)
-	if err != nil {
-		log.Fatalf("Error unmarshalling JSON: %s", err)
-	}
-
-	return config
 }
 
 var antTypeConfig AntTypeConfig = loadAntTypeConfig(antTypesFp)
@@ -88,4 +64,28 @@ func (a *Ant) Move(t *world.Tile) error {
 
 func (a *Ant) GetType() string {
 	return string(a.Type)
+}
+
+type AntTypeProperties struct {
+	MoveSpeed int `json:"MoveSpeed"`
+	Attack    int `json:"Attack"`
+	Defense   int `json:"Defense"`
+	HP        int `json:"HP"`
+}
+
+type AntTypeConfig map[string]AntTypeProperties
+
+func loadAntTypeConfig(filename string) AntTypeConfig {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		log.Fatalf("Error reading file: %s", err)
+	}
+
+	var config AntTypeConfig
+	err = json.Unmarshal(data, &config)
+	if err != nil {
+		log.Fatalf("Error unmarshalling JSON: %s", err)
+	}
+
+	return config
 }
