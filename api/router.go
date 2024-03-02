@@ -12,6 +12,8 @@ func RegisterRoutes() *mux.Router {
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/start", handlers.Start).Methods("GET")
 
+	// r.HandleFunc("/colonies/{colonyIndex int}/spawn/{antType string}", handlers.Spawn).Methods("POST")
+
 	amw := AuthenticationMiddleware{}
 	r.Use(amw.Middleware)
 
