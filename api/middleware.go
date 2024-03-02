@@ -14,6 +14,7 @@ import (
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Do stuff here
+		fmt.Println()
 		log.Println(r.RequestURI)
 		// Call the next handler, which can be another middleware in the chain, or the final handler.
 		next.ServeHTTP(w, r)
@@ -36,7 +37,6 @@ func (amw *AuthenticationMiddleware) Middleware(next http.Handler) http.Handler 
 
 		// Verify the token.
 		ctx := r.Context()
-		// Assuming verifyToken returns the username of the authenticated user:
 		userName, err := verifyToken(ctx, token)
 		if err != nil {
 			http.Error(w, "Forbidden: invalid token", http.StatusForbidden)
@@ -68,7 +68,7 @@ func extractToken(authHeader string) (string, error) {
 
 // verifyToken checks the validity of the token and retrieves the associated user.
 func verifyToken(ctx context.Context, token string) (string, error) {
-	user, err := db.Redis.Get(ctx, "token:"+token+":user").Result()
+	user, err := db.Redis.Get(ctx, token+":user").Result()
 	if err != nil {
 		return "", err // Consider wrapping this error to distinguish between Redis errors and not found errors.
 	}

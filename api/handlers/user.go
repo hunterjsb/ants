@@ -20,6 +20,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	}
 
 	colony := ant.NewColony(&user, world.OverWorld.Tiles[randomY][randomX])
+	user.Colonies = append(user.Colonies, colony)
 	fmt.Println("New Colony created for", colony.Owner.Name)
 
 	// Marshal the newQueen to JSON

@@ -3,6 +3,7 @@ package db
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
@@ -15,14 +16,21 @@ func getPw() string {
 	}
 
 	pw := os.Getenv("REDIS_PW")
-	if pw == "" {
-		log.Fatal("No Redis PW set")
-	}
 	return pw
+}
+
+func getDb() int {
+	rdb := os.Getenv("REDIS_DB")
+	rdbNum, err := strconv.Atoi(rdb)
+	if err != nil {
+		log.Println("Invalid Redis DB or DB not supplied - using 0")
+		return 0
+	}
+	return rdbNum
 }
 
 var Redis *redis.Client = redis.NewClient(&redis.Options{
 	Addr:     "localhost:6379",
 	Password: getPw(),
-	DB:       0, // use default DB
+	DB:       getDb(),
 })
