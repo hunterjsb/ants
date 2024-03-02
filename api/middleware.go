@@ -35,10 +35,10 @@ func (amw *AuthenticationMiddleware) Middleware(next http.Handler) http.Handler 
 		}
 
 		// Create a User object (assuming you have a struct like this)
-		user := ant.User{Name: userName}
+		user := ant.User{Name: userName} // TODO load colonies
 
 		// Attach the User to the context
-		ctxWithUser := context.WithValue(ctx, "user", user)
+		ctxWithUser := user.AddToContext(ctx)
 
 		// Create a new request with the updated context
 		rWithUser := r.WithContext(ctxWithUser)
