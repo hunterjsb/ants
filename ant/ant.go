@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-const antTypesFp string = "ant/anttypes.json"
+var antTypeConfig AntTypeConfig = loadAntTypeConfig("ant/anttypes.json")
 
 type AntType string
 
@@ -30,22 +30,13 @@ type Ant struct {
 	Colony    *Colony     `json:"-"`
 }
 
-var antTypeConfig AntTypeConfig = loadAntTypeConfig(antTypesFp)
-
-func NewQueen(c *Colony, tile *world.Tile) *Ant {
-	props, exists := antTypeConfig[string(Queen)]
-	if !exists {
-		log.Fatal("Queen not defined in config")
+func (a *Ant) Move(t *world.Tile) error {
+	dist := math.Sqrt(float64((a.Tile.X-t.X)*(a.Tile.X-t.X) + (a.Tile.Y-t.Y)*(a.Tile.Y-t.Y)))
+	if dist > float64(a.MoveSpeed) {
+		return errors.New("move too far")
 	}
-	return &Ant{
-		Colony:    c,
-		Tile:      tile,
-		Type:      Queen,
-		MoveSpeed: props.MoveSpeed,
-		Attack:    props.Attack,
-		Defense:   props.Defense,
-		HP:        props.HP,
-	}
+	a.Tile = t
+	return nil
 }
 
 func (a *Ant) Spawn(t AntType) *Ant {
@@ -69,15 +60,6 @@ func (a *Ant) Spawn(t AntType) *Ant {
 
 func (a *Ant) Adjacent() []*world.Tile {
 	return a.Tile.Adjacent()
-}
-
-func (a *Ant) Move(t *world.Tile) error {
-	dist := math.Sqrt(float64((a.Tile.X-t.X)*(a.Tile.X-t.X) + (a.Tile.Y-t.Y)*(a.Tile.Y-t.Y)))
-	if dist > float64(a.MoveSpeed) {
-		return errors.New("move too far")
-	}
-	a.Tile = t
-	return nil
 }
 
 func (a *Ant) GetType() string {
@@ -106,4 +88,20 @@ func loadAntTypeConfig(filename string) AntTypeConfig {
 	}
 
 	return config
+}
+
+func NewQueen(c *Colony, tile *world.Tile) *Ant {
+	props, exists := antTypeConfig[string(Queen)]
+	if !exists {
+		log.Fatal("Queen not defined in config")
+	}
+	return &Ant{
+		Colony:    c,
+		Tile:      tile,
+		Type:      Queen,
+		MoveSpeed: props.MoveSpeed,
+		Attack:    props.Attack,
+		Defense:   props.Defense,
+		HP:        props.HP,
+	}
 }

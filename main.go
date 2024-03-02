@@ -9,9 +9,12 @@ import (
 )
 
 func main() {
+	// Create a new world
 	world.Init()
-	// queen := ant.Ant{Tile: w.Tiles[1][1], Type: ant.Queen, MoveSpeed: 0}
 
+	// Set up the web server
 	r := api.RegisterRoutes()
+
+	// Start listening on port 8000
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
