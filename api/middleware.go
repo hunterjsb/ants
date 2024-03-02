@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -10,8 +11,16 @@ import (
 	"ants/db"
 )
 
-type AuthenticationMiddleware struct {
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Do stuff here
+		log.Println(r.RequestURI)
+		// Call the next handler, which can be another middleware in the chain, or the final handler.
+		next.ServeHTTP(w, r)
+	})
 }
+
+type AuthenticationMiddleware struct{}
 
 // Middleware enhances HTTP requests with authentication logic.
 func (amw *AuthenticationMiddleware) Middleware(next http.Handler) http.Handler {

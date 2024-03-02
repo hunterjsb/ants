@@ -16,6 +16,7 @@ func RegisterRoutes() *mux.Router {
 
 	amw := AuthenticationMiddleware{}
 	r.Use(amw.Middleware)
+	r.Use(loggingMiddleware)
 
 	return r
 }
