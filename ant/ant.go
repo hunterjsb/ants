@@ -130,7 +130,7 @@ func loadAntTypeConfig(filename string) AntTypeConfig {
 }
 
 // ERRORS
-type AntError struct { // holds information about the error along with an HTTP status code
+type AntError struct {
 	StatusCode int    // HTTP status code
 	Message    string // A human-readable message describing the error
 }
