@@ -11,7 +11,7 @@ typedef enum {
     MOUNTAIN
 } TileType;
 
-TileType getTileType(float perlinValue) {
+TileType get_tile_type(float perlinValue) {
     if (perlinValue < 0.3) return WATER;
     if (perlinValue < 0.4) return SAND;
     if (perlinValue < 0.6) return GRASS;
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     for (y = 0; y < chunk_dim; y++) {
         for (x = 0; x < chunk_dim; x++) {
             per = Perlin_Get2d(x, y, 0.1, 4, hashes[1]);
-            TileType tile = getTileType(per);
+            TileType tile = get_tile_type(per);
             // For demonstration, print the tile type as a character
             char tileChar;
             switch (tile) {
